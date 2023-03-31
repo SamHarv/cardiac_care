@@ -1,14 +1,13 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
-import '../constants.dart';
+import '/constants.dart';
+import '/widgets/app_drawer.dart';
+import '/widgets/button.dart';
+import '/widgets/my_appbar.dart';
 
-import '../widgets/button.dart';
-import '../widgets/my_appbar.dart';
-import '../widgets/app_drawer.dart';
-
-class BaselineMassPage extends StatelessWidget {
-  const BaselineMassPage({super.key});
+class SignIn extends StatelessWidget {
+  const SignIn({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,43 +26,49 @@ class BaselineMassPage extends StatelessWidget {
                 height: MediaQuery.of(context).size.height * 0.3,
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            Column(
               children: const [
                 SizedBox(
                   width: 250.0,
                   child: TextField(
                     decoration: InputDecoration(
                       filled: true,
-                      labelText: 'Set Baseline Mass',
+                      labelText: 'Username',
                       labelStyle: TextStyle(
                         fontSize: 23.0,
                       ),
                     ),
-                    keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.emailAddress,
                   ),
                 ),
                 SizedBox(
-                  width: 20.0,
-                ),
-                Text(
-                  'kg',
-                  style: TextStyle(
-                    fontSize: 28.0,
+                  width: 250.0,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      filled: true,
+                      labelText: 'Password',
+                      labelStyle: TextStyle(
+                        fontSize: 23.0,
+                      ),
+                    ),
+                    keyboardType: TextInputType.visiblePassword,
                   ),
                 ),
               ],
             ),
+            const SizedBox(
+              width: 20.0,
+            ),
             Column(
               children: [
                 Button(
-                  pressed: () => context.go('/massdashboard'),
+                  pressed: () => Beamer.of(context).beamToNamed('/dashboard'),
                   height: 0.09,
                   width: 0.42,
                   colour: Colors.white,
                   child: const Center(
                     child: Text(
-                      'Save',
+                      'Log In',
                       style: standardText,
                     ),
                   ),

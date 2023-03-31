@@ -6,6 +6,10 @@ const TextStyle standardText = TextStyle(
 );
 
 const TextStyle largeText = TextStyle(
-  color: Colors.black,
+  color: primaryColour,
   fontSize: 30.0,
 );
+
+const Color primaryColour = Color.fromARGB(255, 0, 74, 173);
+const Color secondaryColour = Colors.black;
+const Color thirdColour = Colors.white;

@@ -1,83 +1,122 @@
-import 'package:chf_app/pages/baseline_mass_page.dart';
-import 'package:chf_app/pages/body_mass_page.dart';
-import 'package:chf_app/pages/connect.dart';
-import 'package:chf_app/pages/fluid_dashboard.dart';
-import 'package:chf_app/pages/fluid_intake_page.dart';
-import 'package:chf_app/pages/fluid_restriction.dart';
-import 'package:chf_app/pages/mass_dashboard.dart';
-import 'package:chf_app/pages/obj_measures.dart';
-import 'package:chf_app/pages/privacy_policy.dart';
-import 'package:chf_app/pages/profile.dart';
-import 'package:chf_app/pages/symptom_tracker.dart';
-import 'package:chf_app/pages/telehealth.dart';
-import 'package:go_router/go_router.dart';
+import 'package:beamer/beamer.dart';
+import 'package:flutter/material.dart';
 
-import './pages/home_page.dart';
-import './pages/about.dart';
-import './pages/welcome.dart';
+import 'pages/mass.dart';
+import 'pages/obj_measures.dart';
+import 'pages/profile.dart';
+import 'pages/symptom_tracker.dart';
+import 'pages/registration.dart';
+import 'pages/settings.dart';
+import 'pages/contact.dart';
+import 'pages/sign_in.dart';
+import 'pages/dashboard.dart';
+import 'pages/about.dart';
+import 'pages/welcome.dart';
 
-final router = GoRouter(
-  initialLocation: '/',
-  routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => const Welcome(),
-    ),
-    GoRoute(
-      path: '/about',
-      builder: (context, state) => const About(),
-    ),
-    GoRoute(
-      path: '/home',
-      builder: (context, state) => const HomePage(),
-    ),
-    GoRoute(
-      path: '/baselinemass',
-      builder: (context, state) => const BaselineMassPage(),
-    ),
-    GoRoute(
-      path: '/mass',
-      builder: (context, state) => const BodyMassPage(),
-    ),
-    GoRoute(
-      path: '/connect',
-      builder: (context, state) => const Connect(),
-    ),
-    GoRoute(
-      path: '/fluiddashboard',
-      builder: (context, state) => const FluidDashboard(),
-    ),
-    GoRoute(
-      path: '/fluid',
-      builder: (context, state) => const FluidIntakePage(),
-    ),
-    GoRoute(
-      path: '/fluidrestriction',
-      builder: (context, state) => const FluidRestriction(),
-    ),
-    GoRoute(
-      path: '/massdashboard',
-      builder: (context, state) => const MassDashboard(),
-    ),
-    GoRoute(
-      path: '/obj',
-      builder: (context, state) => const ObjMeasures(),
-    ),
-    GoRoute(
-      path: '/privacy',
-      builder: (context, state) => const PrivacyPolicy(),
-    ),
-    GoRoute(
-      path: '/profile',
-      builder: (context, state) => const ProfilePage(),
-    ),
-    GoRoute(
-      path: '/symptoms',
-      builder: (context, state) => const SymptomTracker(),
-    ),
-    GoRoute(
-      path: '/telehealth',
-      builder: (context, state) => const Telehealth(),
-    ),
-  ],
+final routerDelegate = BeamerDelegate(
+  notFoundRedirectNamed: '/',
+  initialPath: '/',
+  locationBuilder: RoutesLocationBuilder(
+    routes: {
+      '/': (context, state, data) {
+        return const BeamPage(
+          key: ValueKey(''),
+          type: BeamPageType.fadeTransition,
+          title: 'HF App',
+          child: Welcome(),
+        );
+      },
+      '/registration': (context, state, data) {
+        return const BeamPage(
+          key: ValueKey('registration'),
+          type: BeamPageType.fadeTransition,
+          title: 'Registration - HF App',
+          child: Registration(),
+        );
+      },
+      '/dashboard': (context, state, data) {
+        return const BeamPage(
+          key: ValueKey('dashboard'),
+          type: BeamPageType.fadeTransition,
+          title: 'Dashboard - HF App',
+          child: Dashboard(),
+        );
+      },
+      '/profile': (context, state, data) {
+        return const BeamPage(
+          key: ValueKey('profile'),
+          type: BeamPageType.fadeTransition,
+          title: 'Profile - HF App',
+          child: ProfilePage(),
+        );
+      },
+      '/about': (context, state, data) {
+        return const BeamPage(
+          key: ValueKey('about'),
+          type: BeamPageType.fadeTransition,
+          title: 'About - HF App',
+          child: About(),
+        );
+      },
+      '/contact': (context, state, data) {
+        return const BeamPage(
+          key: ValueKey('contact'),
+          type: BeamPageType.fadeTransition,
+          title: 'Contact - HF App',
+          child: Contact(),
+        );
+      },
+      '/settings': (context, state, data) {
+        return const BeamPage(
+          key: ValueKey('settings'),
+          type: BeamPageType.fadeTransition,
+          title: 'Settings - HF App',
+          child: Settings(),
+        );
+      },
+      '/symptoms': (context, state, data) {
+        return const BeamPage(
+          key: ValueKey('symptoms'),
+          type: BeamPageType.fadeTransition,
+          title: 'Symptom Tracker - HF App',
+          child: SymptomTracker(),
+        );
+      },
+      '/obj': (context, state, data) {
+        return const BeamPage(
+          key: ValueKey('obj'),
+          type: BeamPageType.fadeTransition,
+          title: 'Cardiac Measures - HF App',
+          child: ObjMeasures(),
+        );
+      },
+      '/signin': (context, state, data) {
+        return const BeamPage(
+          key: ValueKey('signin'),
+          type: BeamPageType.fadeTransition,
+          title: 'Sign In - HF App',
+          child: SignIn(),
+        );
+      },
+      '/mass': (context, state, data) {
+        return const BeamPage(
+          key: ValueKey('mass'),
+          type: BeamPageType.slideTransition,
+          title: 'Record Body Mass - HF App',
+          child: MassPage(),
+        );
+      },
+
+      // '/article/:id': (context, state, data) {
+      //   final postId = state.pathParameters['id'];
+      //   final post = postData.firstWhere((post) => post.id == postId);
+      //   return BeamPage(
+      //     key: ValueKey('article-$postId'),
+      //     type: BeamPageType.fadeTransition,
+      //     title: post.title,
+      //     child: ArticlePage(post: post, id: postId!),
+      //   );
+      // },
+    },
+  ),
 );

@@ -1,8 +1,29 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+
+import '/constants.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
+
+  Widget buildListTile(String title, IconData icon, dynamic tapHandler) {
+    return ListTile(
+      tileColor: thirdColour,
+      leading: Icon(
+        icon,
+        size: 26,
+        color: secondaryColour,
+      ),
+      title: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 24,
+          color: primaryColour,
+        ),
+      ),
+      onTap: tapHandler,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,106 +42,61 @@ class AppDrawer extends StatelessWidget {
             ),
           ),
           const Divider(),
-          ListTile(
-            title: const Text(
-              'Home',
-              style: TextStyle(
-                fontSize: 20.0,
-              ),
-            ),
-            onTap: () => context.go('/home'),
+          buildListTile(
+            'Dashboard',
+            Icons.dashboard,
+            () => Beamer.of(context).beamToNamed('/dashboard'),
           ),
           const Divider(),
-          ListTile(
-            title: const Text(
-              'Body Mass',
-              style: TextStyle(
-                fontSize: 20.0,
-              ),
-            ),
-            onTap: () => context.go('massdashboard'),
+          buildListTile(
+            'Profile',
+            Icons.person,
+            () => Beamer.of(context).beamToNamed('/profile'),
           ),
           const Divider(),
-          ListTile(
-            title: const Text(
-              'Fluid Intake',
-              style: TextStyle(
-                fontSize: 20.0,
-              ),
-            ),
-            onTap: () => context.go('/fluiddashboard'),
+          buildListTile(
+            'About',
+            Icons.info,
+            () => Beamer.of(context).beamToNamed('/about'),
           ),
           const Divider(),
-          ListTile(
-            title: const Text(
-              'Symptom Tracker',
-              style: TextStyle(
-                fontSize: 20.0,
-              ),
-            ),
-            onTap: () => context.go('/symptoms'),
+          buildListTile(
+            'Contact',
+            Icons.email,
+            () => Beamer.of(context).beamToNamed('/contact'),
           ),
           const Divider(),
-          ListTile(
-            title: const Text(
-              'Cardiac Measures',
-              style: TextStyle(
-                fontSize: 20.0,
-              ),
-            ),
-            onTap: () => context.go('/obj'),
+          buildListTile(
+            'Settings',
+            Icons.settings,
+            () => Beamer.of(context).beamToNamed('/settings'),
           ),
           const Divider(),
-          ListTile(
-            title: const Text(
-              'View History Chart',
-              style: TextStyle(
-                fontSize: 20.0,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              TextButton(
+                onPressed: () => Beamer.of(context).beamToNamed('/privacy'),
+                child: const Text(
+                  'Privacy Policy',
+                  style: TextStyle(
+                    color: primaryColour,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
               ),
-            ),
-            onTap: () => context.go('/home'),
-          ),
-          const Divider(),
-          ListTile(
-            title: const Text(
-              'Connect Device',
-              style: TextStyle(
-                fontSize: 20.0,
+              TextButton(
+                onPressed: () => Beamer.of(context).beamToNamed('/terms'),
+                child: const Text(
+                  'Terms of Use',
+                  style: TextStyle(
+                    color: primaryColour,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
               ),
-            ),
-            onTap: () => context.go('/connect'),
+            ],
           ),
-          const Divider(),
-          ListTile(
-            title: const Text(
-              'Speak With Your Clinician',
-              style: TextStyle(
-                fontSize: 20.0,
-              ),
-            ),
-            onTap: () => context.go('/telehealth'),
-          ),
-          const Divider(),
-          ListTile(
-            title: const Text(
-              'Privacy Policy',
-              style: TextStyle(
-                fontSize: 20.0,
-              ),
-            ),
-            onTap: () => context.go('/privacy'),
-          ),
-          const Divider(),
-          ListTile(
-            title: const Text(
-              'About',
-              style: TextStyle(
-                fontSize: 20.0,
-              ),
-            ),
-            onTap: () => context.go('/about'),
-          ),
-          const Divider(),
         ],
       ),
     );

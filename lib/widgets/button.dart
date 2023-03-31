@@ -22,7 +22,7 @@ class Button extends StatelessWidget {
       onTap: pressed,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(32),
           color: colour,
           boxShadow: const [
             BoxShadow(

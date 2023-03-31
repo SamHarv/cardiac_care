@@ -1,17 +1,19 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../constants.dart';
+import '/constants.dart';
+import '/providers.dart';
+import '/widgets/button.dart';
+import '/widgets/my_appbar.dart';
+import '/widgets/app_drawer.dart';
 
-import '../widgets/button.dart';
-import '../widgets/my_appbar.dart';
-import '../widgets/app_drawer.dart';
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class Dashboard extends ConsumerWidget {
+  const Dashboard({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    double? dailyMass = ref.watch(bodyMass);
     return Scaffold(
       drawer: const AppDrawer(),
       appBar: const MyAppBar(),
@@ -19,15 +21,6 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Button(
-              pressed: () => context.go('/telehealth'),
-              height: 0.19,
-              width: 0.89,
-              colour: Colors.white,
-              //Color.fromARGB(255, 0, 74, 173),
-              child:
-                  const Center(child: Text('Telehealth', style: standardText)),
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -35,16 +28,16 @@ class HomePage extends StatelessWidget {
                   height: 0.19,
                   width: 0.42,
                   colour: Colors.white,
-                  pressed: () => context.go('/massdashboard'),
+                  pressed: () => Beamer.of(context).beamToNamed('/mass'),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
-                      Text(
+                    children: [
+                      const Text(
                         'Body Mass',
                         style: standardText,
                       ),
                       Text(
-                        '85.4 kg',
+                        '$dailyMass kg',
                         style: largeText,
                       ),
                     ],
@@ -54,11 +47,16 @@ class HomePage extends StatelessWidget {
                   height: 0.19,
                   width: 0.42,
                   colour: Colors.white,
-                  pressed: () => context.go('/fluiddashboard'),
+                  pressed: () {
+                    //Show modal bottom sheet with input for fluid intake & restriction
+                  },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: const [
-                      Text('Fluid Intake', style: standardText),
+                      Text(
+                        'Fluid Intake',
+                        style: standardText,
+                      ),
                       Text(
                         '1345 ml',
                         style: largeText,
@@ -69,36 +67,16 @@ class HomePage extends StatelessWidget {
               ],
             ),
             Button(
-              pressed: () => context.go('/connect'),
+              pressed: () => Beamer.of(context).beamToNamed('/chart'),
               height: 0.19,
               width: 0.89,
               colour: Colors.white,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  const Text(
-                    'Connect Device',
+                children: const [
+                  Text(
+                    'Chart',
                     style: standardText,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
-                      Icon(
-                        Icons.watch,
-                        color: Colors.red,
-                        size: 40,
-                      ),
-                      Icon(
-                        Icons.scale,
-                        color: Colors.green,
-                        size: 40,
-                      ),
-                      Icon(
-                        Icons.local_drink,
-                        color: Colors.blue,
-                        size: 40,
-                      ),
-                    ],
                   ),
                 ],
               ),
@@ -107,7 +85,7 @@ class HomePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Button(
-                  pressed: () => context.go('/symptoms'),
+                  pressed: () => Beamer.of(context).beamToNamed('/symptoms'),
                   height: 0.19,
                   width: 0.42,
                   colour: Colors.white,
@@ -120,7 +98,7 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 Button(
-                  pressed: () => context.go('/obj'),
+                  pressed: () => Beamer.of(context).beamToNamed('/obj'),
                   height: 0.19,
                   width: 0.42,
                   colour: Colors.white,
@@ -133,14 +111,6 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ],
-            ),
-            TextButton(
-              onPressed: () => context.go('/privacy'),
-              child: const Text(
-                'Privacy Policy',
-                style: TextStyle(
-                    color: Colors.black, decoration: TextDecoration.underline),
-              ),
             ),
           ],
         ),

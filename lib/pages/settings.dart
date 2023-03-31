@@ -2,8 +2,8 @@ import 'package:chf_app/widgets/app_drawer.dart';
 import 'package:chf_app/widgets/my_appbar.dart';
 import 'package:flutter/material.dart';
 
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+class Settings extends StatelessWidget {
+  const Settings({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +11,7 @@ class ProfilePage extends StatelessWidget {
       appBar: MyAppBar(),
       drawer: AppDrawer(),
       body: Center(
-        child: Text('Profile Page'),
+        child: Text('Setting Page'),
       ),
     );
   }

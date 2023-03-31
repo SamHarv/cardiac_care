@@ -1,5 +1,5 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '../constants.dart';
 
@@ -195,7 +195,7 @@ class _SymptomTrackerState extends State<SymptomTracker> {
           ),
           Button(
             pressed: () {
-              context.go('/home');
+              Beamer.of(context).beamToNamed('/dashboard');
             },
             height: 0.09,
             width: 0.42,

@@ -1,5 +1,5 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '/constants.dart';
 
@@ -20,6 +20,7 @@ class Welcome extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+            const Text('HF App'),
             Hero(
               tag: 'logo',
               child: Image.asset(
@@ -29,14 +30,16 @@ class Welcome extends StatelessWidget {
             ),
             Column(
               children: [
+                const Text('New User?'),
                 Button(
-                  pressed: () => context.go('/profile'),
+                  pressed: () =>
+                      Beamer.of(context).beamToNamed('/registration'),
                   height: 0.09,
                   width: 0.42,
                   colour: Colors.white,
                   child: const Center(
                     child: Text(
-                      'Create User',
+                      'Register',
                       style: standardText,
                     ),
                   ),
@@ -44,40 +47,17 @@ class Welcome extends StatelessWidget {
                 const SizedBox(
                   height: 30.0,
                 ),
+                const Text('Already Registered?'),
                 Button(
-                  pressed: () => context.go('/profile'),
+                  pressed: () => Beamer.of(context).beamToNamed('/signin'),
                   height: 0.09,
                   width: 0.42,
                   colour: Colors.white,
                   child: const Center(
                     child: Text(
-                      'Log In',
+                      'Sign In',
                       style: standardText,
                     ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 30.0,
-                ),
-                TextButton(
-                  onPressed: () => context.go('/home'),
-                  child: const Text(
-                    'Skip for now',
-                    style: TextStyle(
-                        color: Colors.black,
-                        decoration: TextDecoration.underline),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10.0,
-                ),
-                TextButton(
-                  onPressed: () => context.go('/privacy'),
-                  child: const Text(
-                    'Privacy Policy',
-                    style: TextStyle(
-                        color: Colors.black,
-                        decoration: TextDecoration.underline),
                   ),
                 ),
               ],

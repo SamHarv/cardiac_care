@@ -1,5 +1,5 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '../constants.dart';
 
@@ -41,7 +41,7 @@ class About extends StatelessWidget {
               ),
             ),
             Button(
-              pressed: () => context.go('/home'),
+              pressed: () => Beamer.of(context).beamToNamed('/dashboard'),
               height: 0.09,
               width: 0.42,
               colour: Colors.white,

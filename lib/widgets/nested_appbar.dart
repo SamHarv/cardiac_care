@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 import '/constants.dart';
 
-class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const MyAppBar({
+class NestedAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const NestedAppBar({
     Key? key,
   }) : super(key: key);
 
@@ -14,7 +14,14 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      automaticallyImplyLeading: true,
+      leading: Padding(
+        padding: const EdgeInsets.all(8),
+        child: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () => Beamer.of(context).beamBack(),
+          //Beamer.of(context).beamToNamed('/dashboard'),
+        ),
+      ),
       iconTheme: const IconThemeData(
         color: secondaryColour,
       ),

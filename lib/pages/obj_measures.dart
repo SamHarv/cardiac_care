@@ -32,7 +32,9 @@ class ObjMeasures extends StatelessWidget {
                   height: 0.19,
                   width: 0.42,
                   colour: Colors.white,
-                  pressed: () {},
+                  pressed: () {
+                    //show modal bottom sheet to select date and HR
+                  },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: const [
@@ -71,13 +73,6 @@ class ObjMeasures extends StatelessWidget {
                       Text('98 %', style: largeText),
                     ],
                   ),
-                ),
-                Button(
-                  height: 0.19,
-                  width: 0.42,
-                  colour: Colors.white,
-                  pressed: () {},
-                  child: const Center(child: Text('ECG', style: largeText)),
                 ),
               ],
             ),
