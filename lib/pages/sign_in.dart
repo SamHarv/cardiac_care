@@ -26,8 +26,8 @@ class SignIn extends StatelessWidget {
                 height: MediaQuery.of(context).size.height * 0.3,
               ),
             ),
-            Column(
-              children: const [
+            const Column(
+              children: [
                 SizedBox(
                   width: 250.0,
                   child: TextField(

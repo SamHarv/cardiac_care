@@ -1,7 +1,10 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 
-import 'pages/mass.dart';
+import 'pages/chart.dart';
+import 'pages/dashboard.dart';
+import 'pages/set_baseline.dart';
+import 'pages/daily_measures.dart';
 import 'pages/obj_measures.dart';
 import 'pages/profile.dart';
 import 'pages/symptom_tracker.dart';
@@ -9,7 +12,7 @@ import 'pages/registration.dart';
 import 'pages/settings.dart';
 import 'pages/contact.dart';
 import 'pages/sign_in.dart';
-import 'pages/dashboard.dart';
+//import 'pages/dashboard.dart';
 import 'pages/about.dart';
 import 'pages/welcome.dart';
 
@@ -40,6 +43,7 @@ final routerDelegate = BeamerDelegate(
           type: BeamPageType.fadeTransition,
           title: 'Dashboard - HF App',
           child: Dashboard(),
+          //Dashboard(),
         );
       },
       '/profile': (context, state, data) {
@@ -98,12 +102,28 @@ final routerDelegate = BeamerDelegate(
           child: SignIn(),
         );
       },
-      '/mass': (context, state, data) {
+      '/baseline': (context, state, data) {
         return const BeamPage(
-          key: ValueKey('mass'),
+          key: ValueKey('baseline'),
           type: BeamPageType.slideTransition,
-          title: 'Record Body Mass - HF App',
-          child: MassPage(),
+          title: 'Set Baseline Measures - HF App',
+          child: SetBaseline(),
+        );
+      },
+      '/daily': (context, state, data) {
+        return const BeamPage(
+          key: ValueKey('daily'),
+          type: BeamPageType.slideTransition,
+          title: 'Record Daily Measures - HF App',
+          child: DailyMeasures(),
+        );
+      },
+      '/chart': (context, state, data) {
+        return const BeamPage(
+          key: ValueKey('chart'),
+          type: BeamPageType.slideTransition,
+          title: 'Chart - HF App',
+          child: Chart(),
         );
       },
 

@@ -35,9 +35,9 @@ class ObjMeasures extends StatelessWidget {
                   pressed: () {
                     //show modal bottom sheet to select date and HR
                   },
-                  child: Column(
+                  child: const Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
+                    children: [
                       Text('Heart Rate', style: standardText),
                       Text('80 bpm', style: largeText),
                     ],
@@ -48,9 +48,9 @@ class ObjMeasures extends StatelessWidget {
                   width: 0.42,
                   colour: Colors.white,
                   pressed: () {},
-                  child: Column(
+                  child: const Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
+                    children: [
                       Text('Blood Pressure', style: standardText),
                       Text('120/80', style: largeText),
                     ],
@@ -66,9 +66,9 @@ class ObjMeasures extends StatelessWidget {
                   width: 0.42,
                   colour: Colors.white,
                   pressed: () {},
-                  child: Column(
+                  child: const Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
+                    children: [
                       Text('Pulse Oximetry', style: standardText),
                       Text('98 %', style: largeText),
                     ],

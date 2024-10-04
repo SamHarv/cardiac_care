@@ -5,7 +5,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/routes.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(const ProviderScope(child: MyApp()));
+import 'db/object_box.dart';
+
+late ObjectBox objectBox;
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  objectBox = await ObjectBox.init();
+  runApp(const ProviderScope(child: MyApp()));
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -14,6 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       theme: ThemeData(
+        useMaterial3: true,
         primaryColor: primaryColour,
       ),
       debugShowCheckedModeBanner: false,

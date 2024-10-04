@@ -1,34 +1,43 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../main.dart';
+import '../models/entry.dart';
 import '/constants.dart';
 import '/widgets/button.dart';
 import '/widgets/nested_appbar.dart';
 import '/widgets/text_field.dart';
 import '/providers.dart';
 
-class MassPage extends ConsumerStatefulWidget {
-  const MassPage({super.key});
+class DailyMeasures extends ConsumerStatefulWidget {
+  const DailyMeasures({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _MassPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _DailyMeasuresState();
 }
 
-class _MassPageState extends ConsumerState<MassPage> {
+class _DailyMeasuresState extends ConsumerState<DailyMeasures> {
+  final fluidController = TextEditingController();
   final massController = TextEditingController();
-  final baselineMassController = TextEditingController();
+  final bpSController = TextEditingController();
+  final bpDController = TextEditingController();
   double? dailyMass;
-  double? setBaselineMass;
   DateTime? date;
   String? formatedDate;
+  double? fluidIntake;
+  int? bpSystolic;
+  int? bpDiastolic;
 
   @override
   Widget build(BuildContext context) {
     final double mediaWidth = MediaQuery.of(context).size.width;
     final double mediaHeight = MediaQuery.of(context).size.height;
     dailyMass = ref.watch(bodyMass);
-    setBaselineMass = ref.watch(baselineMass);
+    fluidIntake = ref.watch(fluidProvider);
+    bpSystolic = ref.watch(systolicProvider);
+    bpDiastolic = ref.watch(diastolicProvider);
     date = ref.watch(dateSelect);
     formatedDate = DateFormat.yMMMMd().format(date!);
 
@@ -86,7 +95,7 @@ class _MassPageState extends ConsumerState<MassPage> {
               ),
             ),
             Text(formatedDate!),
-            const Text('Record your daily body mass below:'),
+            const Text('Record today\'s body mass:'),
             MyTextField(
               mediaWidth: mediaWidth,
               height: mediaHeight * 0.09,
@@ -96,34 +105,76 @@ class _MassPageState extends ConsumerState<MassPage> {
               obscure: false,
               keyboardType: TextInputType.number,
             ),
-            const Text('Adjust your baseline (dry) mass:'),
+            const Text('Record your fluid intake below:'),
             MyTextField(
               mediaWidth: mediaWidth,
               height: mediaHeight * 0.09,
-              controller: baselineMassController,
-              hintText: '$setBaselineMass',
-              suffix: 'kg',
+              controller: fluidController,
+              hintText: '$fluidIntake',
+              suffix: 'L',
+              obscure: false,
+              keyboardType: TextInputType.number,
+            ),
+            const Text('Record your blood pressure below:'),
+            MyTextField(
+              mediaWidth: mediaWidth,
+              height: mediaHeight * 0.09,
+              controller: bpSController,
+              hintText: '$bpSystolic',
+              suffix: '',
+              obscure: false,
+              keyboardType: TextInputType.number,
+            ),
+            MyTextField(
+              mediaWidth: mediaWidth,
+              height: mediaHeight * 0.09,
+              controller: bpDController,
+              hintText: '$bpDiastolic',
+              suffix: '',
               obscure: false,
               keyboardType: TextInputType.number,
             ),
             Button(
-              pressed: () {
-                // ignore: unnecessary_null_comparison
+              pressed: () async {
+                //change to conditionals and implement add/ update db
                 massController.text == ''
                     ? ref.read(bodyMass.notifier).state = ref.watch(bodyMass)
                     : ref.read(bodyMass.notifier).state =
                         double.parse(massController.text);
                 dailyMass = ref.watch(bodyMass);
-                // ignore: unnecessary_null_comparison
-                baselineMassController.text == ''
-                    ? ref.read(baselineMass.notifier).state =
-                        ref.watch(baselineMass)
-                    : ref.read(baselineMass.notifier).state =
-                        double.parse(baselineMassController.text);
-                setBaselineMass = ref.watch(baselineMass);
-                //Beamer.of(context).beamBack();
-                //Add dailyMass result to list of Masses or Map with Date : Mass?
+                fluidController.text == ''
+                    ? ref.read(fluidProvider.notifier).state =
+                        ref.watch(fluidProvider)
+                    : ref.read(fluidProvider.notifier).state =
+                        double.parse(fluidController.text);
+                fluidIntake = ref.watch(fluidProvider);
+                bpSController.text == ''
+                    ? ref.read(systolicProvider.notifier).state =
+                        ref.watch(systolicProvider)
+                    : ref.read(systolicProvider.notifier).state =
+                        int.parse(bpSController.text);
+                bpSystolic = ref.watch(systolicProvider);
+                bpDController.text == ''
+                    ? ref.read(diastolicProvider.notifier).state =
+                        ref.watch(diastolicProvider)
+                    : ref.read(diastolicProvider.notifier).state =
+                        int.parse(bpDController.text);
+                bpDiastolic = ref.watch(diastolicProvider);
+
+                final date = ref.watch(dateSelect);
+
+                //Need to order by date and check if date is in DB
+
+                final entry = Entry(
+                  date: date,
+                  mass: double.parse(massController.text),
+                  fluid: double.parse(fluidController.text),
+                  bPS: int.parse(bpSController.text),
+                  bPD: int.parse(bpDController.text),
+                );
+                objectBox.insertEntry(entry);
                 //show snackBar
+                Beamer.of(context).beamToNamed('/dashboard');
               },
               height: 0.09,
               width: mediaWidth <= 750 ? 0.35 : 0.2,

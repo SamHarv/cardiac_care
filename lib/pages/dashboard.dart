@@ -2,17 +2,36 @@ import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../main.dart';
+import '../models/entry.dart';
 import '/constants.dart';
 import '/providers.dart';
 import '/widgets/button.dart';
 import '/widgets/my_appbar.dart';
 import '/widgets/app_drawer.dart';
 
-class Dashboard extends ConsumerWidget {
+//Restructure to display readings  but have buttons to either adjust baseline or
+//record daily entries
+//Display mass, fluid intake, baseline mass, fluid restriction
+
+class Dashboard extends ConsumerStatefulWidget {
   const Dashboard({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _DashboardState();
+}
+
+class _DashboardState extends ConsumerState<Dashboard> {
+  late Stream<List<Entry>> streamEntries;
+
+  @override
+  void initState() {
+    streamEntries = objectBox.getEntries();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     double? dailyMass = ref.watch(bodyMass);
     return Scaffold(
       drawer: const AppDrawer(),
@@ -28,7 +47,7 @@ class Dashboard extends ConsumerWidget {
                   height: 0.19,
                   width: 0.42,
                   colour: Colors.white,
-                  pressed: () => Beamer.of(context).beamToNamed('/mass'),
+                  pressed: () => Beamer.of(context).beamToNamed('/daily'),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -47,12 +66,10 @@ class Dashboard extends ConsumerWidget {
                   height: 0.19,
                   width: 0.42,
                   colour: Colors.white,
-                  pressed: () {
-                    //Show modal bottom sheet with input for fluid intake & restriction
-                  },
-                  child: Column(
+                  pressed: () => Beamer.of(context).beamToNamed('/baseline'),
+                  child: const Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
+                    children: [
                       Text(
                         'Fluid Intake',
                         style: standardText,
@@ -71,9 +88,9 @@ class Dashboard extends ConsumerWidget {
               height: 0.19,
               width: 0.89,
               colour: Colors.white,
-              child: Column(
+              child: const Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
+                children: [
                   Text(
                     'Chart',
                     style: standardText,
